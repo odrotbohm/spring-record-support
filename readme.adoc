@@ -1,0 +1,38 @@
+= Spring Record support (experimental)
+
+This repository contains a tiny Spring extension that makes JDK 14 records work with Spring, most notably Spring MVC's web binding and Spring Data.
+It achieves that by providing a custom `BeanInfoFactory` that's ultimately responsible to create `PropertyDescriptor` instances via `BeanUtils.getPropertyDescriptors(…)`, which Spring modules usually use to inspect types for all interactions with user code.
+
+== Usage
+
+All you need to do is including the JAR in your JDK 14 project and enable the preview features (by using the `--enable-preview` flag).
+
+[source, xml]
+----
+<dependency>
+  <groupId>de.odrotbohm.experiments</groupId>
+  <artifactId>spring-record-support</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+</dependency>
+----
+
+Artifacts are available from the Spring snapshot repo:
+
+[source, xml]
+----
+<repositories>
+  <repository>
+    <id>spring-libs-snapshot</id>
+    <url>https://repo.spring.io/libs-snapshot</url>
+  </repository>
+</repositories>
+----
+
+Find a sample of the usage of this in the `spring-record-example` folder using a record with Spring Data's mapping infrastructure.
+
+== Outlook
+
+This is not intended for production usage right now as it's an experiment to see what it actually takes to make Spring Framework work with records.
+There are currently https://mail.openjdk.java.net/pipermail/amber-dev/2020-January/005487.html[discussions going on] to make a future JDK return `PropertyDescriptor` instances for records out of the box.
+That would prevent other frameworks (Hibernate, Thymeleaf etc.) from having to ship similar support.
+I.e. we might see the need for code like this to go away in a future JDK release.

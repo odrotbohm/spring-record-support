@@ -1,0 +1,1 @@
+org.springframework.beans.BeanInfoFactory=de.odrotbohm.experiments.jdk14.Jdk14BeanInfoFactory
